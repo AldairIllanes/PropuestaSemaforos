@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GOW-GO-26-005 — Semáforos · Arequipa</title>
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <script>
+    // En esta WebView los heights en % / vh resuelven a 0 (el viewport CSS
+    // queda mal), pero window.innerHeight sí es correcto: fijamos el alto
+    // del body en px para que el flex del layout llene la pantalla.
+    (function () {
+      function fit() {
+        document.body.style.height = window.innerHeight + "px";
+      }
+      fit();
+      window.addEventListener("resize", fit);
+      window.addEventListener("orientationchange", fit);
+    })();
+  </script>
+  <header class="bar">
+    <div class="brand">
+      <strong>GOW-GO-26-005</strong>
+      <span>Semáforo realista · un color activo</span>
+    </div>
+    <div class="controls" role="group" aria-label="Modelo">
+      <span class="label">Modelo</span>
+      <button type="button" class="fam active" data-model="A">A · A5</button>
+      <button type="button" class="fam" data-model="B">B · B5</button>
+      <button type="button" class="fam" data-model="C">C · C2</button>
+    </div>
+    <div class="controls" role="group" aria-label="Estado">
+      <span class="label">Estado</span>
+      <button type="button" class="state active" data-state="rojo">Rojo</button>
+      <button type="button" class="state" data-state="ambar">Ámbar</button>
+      <button type="button" class="state" data-state="verde">Verde</button>
+      <button type="button" class="state" data-state="apagado">Apagado</button>
+    </div>
+    <div class="controls" role="group" aria-label="Color">
+      <span class="label">Color</span>
+      <button type="button" class="color active" data-color="negro">Negro</button>
+      <button type="button" class="color" data-color="amarillo">Amarillo</button>
+    </div>
+    <div class="controls" role="group" aria-label="Versión">
+      <span class="label">Versión</span>
+      <button type="button" class="ver active" data-version="v1">V1</button>
+      <button type="button" class="ver" data-version="v2">V2</button>
+    </div>
+    <div class="meta">
+      <span class="zoom" id="zoomLabel">Zoom —</span>
+      <button type="button" id="btnZoomOut">Alejar</button>
+      <button type="button" id="btnZoomCity">Ciudad</button>
+      <button type="button" id="btnZoomIn">Acercar</button>
+    </div>
+  </header>
+
+  <main class="map-area">
+    <div id="map"></div>
+    <div class="legend" id="legend"></div>
+
+    <aside class="hint" id="hint">
+      V1 · A5 Poste con base — solo un foco brilla. Cambia modelo, color y versión.
+    </aside>
+  </main>
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

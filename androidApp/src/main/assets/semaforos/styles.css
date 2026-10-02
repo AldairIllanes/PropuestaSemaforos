@@ -1,0 +1,292 @@
+:root {
+  --bg: #0f1419;
+  --panel: #1a222c;
+  --text: #e8eef4;
+  --muted: #9aabbc;
+  --accent: #ca8a04;
+  --line: #2a3542;
+  --rojo: #dc2626;
+  --ambar: #f59e0b;
+  --verde: #16a34a;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Encabezado arriba (puede envolverse) y el mapa ocupando el resto */
+body {
+  display: flex;
+  flex-direction: column;
+  /* refuerzo: asegura altura completa aunque el % no resuelva */
+  min-height: 100vh;
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1.1rem;
+  padding: 0.6rem 1rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  z-index: 2;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 11rem;
+}
+
+.brand span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.controls .label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-right: 0.15rem;
+}
+
+.controls button, .meta button {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: #121820;
+  color: var(--text);
+  padding: 0.38rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+
+.controls button:hover, .meta button:hover { border-color: var(--accent); }
+
+.controls button.active {
+  background: #854d0e;
+  border-color: #854d0e;
+  color: #fff;
+  font-weight: 600;
+}
+
+.color.active[data-color="negro"] {
+  background: #3f3f46;
+  border-color: #a1a1aa;
+  color: #fff;
+}
+
+.color.active[data-color="amarillo"] {
+  background: #facc15;
+  border-color: #facc15;
+  color: #1c1917;
+}
+
+.state.active[data-state="rojo"] {
+  background: var(--rojo);
+  border-color: var(--rojo);
+  color: #fff;
+  font-weight: 600;
+}
+
+.state.active[data-state="ambar"] {
+  background: var(--ambar);
+  border-color: var(--ambar);
+  color: #1c1917;
+  font-weight: 600;
+}
+
+.state.active[data-state="verde"] {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: #fff;
+  font-weight: 600;
+}
+
+.state.active[data-state="apagado"] {
+  background: #475569;
+  border-color: #475569;
+  color: #fff;
+  font-weight: 600;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.zoom {
+  min-width: 5.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Zona del mapa: ocupa todo el alto restante y es el contenedor
+   de leyenda / hint (para que no tapen el encabezado). */
+.map-area {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 12rem;
+}
+
+#map {
+  position: absolute;
+  inset: 0;
+}
+
+.legend {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  width: 150px;
+  max-width: 150px;
+  background: rgba(26, 34, 44, 0.95);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.legend strong {
+  color: var(--text);
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
+.legend .sub {
+  display: block;
+  color: var(--text);
+  opacity: 0.8;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+}
+
+.legend .meta-row {
+  margin-top: 0.3rem;
+  border-top: 1px dashed var(--line);
+  padding-top: 0.25rem;
+}
+
+.legend .row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.2rem 0;
+}
+
+.legend .lamp {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  border: 1px solid #1c1917;
+  flex-shrink: 0;
+  opacity: 0.35;
+}
+
+.legend .lamp.on { opacity: 1; box-shadow: 0 0 8px currentColor; }
+
+.hint {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  background: rgba(26, 34, 44, 0.92);
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  max-width: min(22rem, calc(100% - 20px));
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+.maplibregl-popup-content {
+  background: #1a222c;
+  color: #e8eef4;
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+.maplibregl-popup-tip { border-top-color: #1a222c !important; }
+
+/* ---------- Teléfono / tablet ---------- */
+@media (max-width: 900px) {
+  .bar {
+    padding: 0.4rem 0.55rem;
+    gap: 0.35rem 0.5rem;
+  }
+
+  .brand {
+    flex: 1 1 100%;
+    min-width: 0;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .controls .label { font-size: 0.7rem; }
+
+  .controls button, .meta button {
+    padding: 0.3rem 0.45rem;
+    font-size: 0.76rem;
+    border-radius: 5px;
+  }
+
+  .meta {
+    margin-left: auto;
+    gap: 0.35rem;
+    font-size: 0.76rem;
+  }
+
+  .zoom { min-width: 4.6rem; }
+
+    .legend {
+      top: 8px;
+      left: 8px;
+      width: 140px;
+      max-width: 140px;
+      padding: 0.4rem 0.5rem;
+      font-size: 0.72rem;
+      line-height: 1.3;
+    }
+
+  .legend strong { margin-bottom: 0.15rem; }
+  .legend .row { margin: 0.1rem 0; }
+
+  .hint {
+    left: 8px;
+    bottom: 26px; /* deja visible la atribución de OSM abajo a la derecha */
+    max-width: calc(100% - 16px);
+    font-size: 0.76rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+/* Muy angosto: el subtítulo del marca no cabe */
+@media (max-width: 480px) {
+  .brand span { display: none; }
+}
