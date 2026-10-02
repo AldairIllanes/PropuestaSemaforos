@@ -235,17 +235,17 @@ const VERSIONS = {
   v1: {
     label: "V1",
     models: {
-      A: { code: "A5", name: "Poste con base", fn: v1Poste },
-      B: { code: "B5", name: "Perfil delgado", fn: v1Compacto },
-      C: { code: "C2", name: "Brazo curvo", fn: v1Brazo },
+      A: { code: "A", name: "Poste con base", short: "A Poste", fn: v1Poste },
+      B: { code: "B", name: "Perfil delgado", short: "B Compacto", fn: v1Compacto },
+      C: { code: "C", name: "Brazo curvo", short: "C Brazo", fn: v1Brazo },
     },
   },
   v2: {
     label: "V2",
     models: {
-      A: { code: "A5", name: "Poste con base", fn: v2Poste },
-      B: { code: "B5", name: "Estilo moderno", fn: v2Moderno },
-      C: { code: "C4", name: "Brazo largo", fn: v2BrazoLargo },
+      A: { code: "A", name: "Poste con base", short: "A Poste", fn: v2Poste },
+      B: { code: "B", name: "Estilo moderno", short: "B Compacto", fn: v2Moderno },
+      C: { code: "C", name: "Brazo largo", short: "C Brazo", fn: v2BrazoLargo },
     },
   },
 };
@@ -316,7 +316,7 @@ function syncModelLabels() {
   const v = VERSIONS[currentVersion];
   document.querySelectorAll(".fam").forEach((b) => {
     const m = v.models[b.dataset.model];
-    b.textContent = `${b.dataset.model} · ${m.code}`;
+    b.textContent = m.short || m.name;   // solo el nombre del modelo
   });
 }
 
